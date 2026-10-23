@@ -59,7 +59,8 @@ def parse_page_frontmatter(path: Path, errors: list[str]) -> dict[str, object]:
 def parse_manifest(path: Path, errors: list[str]) -> dict[str, dict[str, str]]:
     entries: dict[str, dict[str, str]] = {}
     body = path.read_text(encoding="utf-8").splitlines()
-    first = next((line.strip() for line in body if line.strip() and not line.lstrip().startswith("#")), "")
+    header_index = next((i for i, line in enumerate(body) if line.strip() and not line.lstrip().startswith("#")), None)
+    first = body[header_index].strip() if header_index is not None else ""
     if first not in {"sources:", "sources: []"}:
         errors.append(f"{path}: expected 'sources:' or 'sources: []'")
         return entries
@@ -85,7 +86,7 @@ def parse_manifest(path: Path, errors: list[str]) -> dict[str, dict[str, str]]:
         digest = item.get("sha256", "")
         if digest and not re.fullmatch(r"[a-fA-F0-9]{64}", digest):
             errors.append(f"{path}: sha256 must have 64 hexadecimal characters for '{ident}'")
-    for lineno, line in enumerate(body[1:], 2):
+    for lineno, line in enumerate(body[header_index + 1:], header_index + 2):
         if not line.strip() or line.lstrip().startswith("#"):
             continue
         if (item := re.fullmatch(r"  - id:[ \t]*(.+)", line)):
