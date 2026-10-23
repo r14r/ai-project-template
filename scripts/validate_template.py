@@ -50,7 +50,7 @@ for name in REQUIRED:
 version_file = ROOT / "VERSION"
 if version_file.exists():
     version = version_file.read_text(encoding="utf-8").strip()
-    check(bool(re.fullmatch(r"0|[1-9]\\d*\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?", version)), f"Invalid SemVer: {version}")
+    check(bool(re.fullmatch(r"(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?", version)), f"Invalid SemVer: {version}")
 
 for skill in sorted((ROOT / ".agents" / "skills").glob("*/SKILL.md")):
     content = skill.read_text(encoding="utf-8")
@@ -58,9 +58,9 @@ for skill in sorted((ROOT / ".agents" / "skills").glob("*/SKILL.md")):
     check(len(parts) == 3 and not parts[0].strip(), f"Missing YAML frontmatter: {skill}")
     if len(parts) == 3:
         metadata = parts[1]
-        check(bool(re.search(r"(?m)^name:\\s*[a-z0-9-]+\\s*$", metadata)), f"Missing skill name: {skill}")
-        check(bool(re.search(r"(?m)^description:\\s*\\S", metadata)), f"Missing description: {skill}")
-        match = re.search(r"(?m)^name:\\s*([a-z0-9-]+)\\s*$", metadata)
+        check(bool(re.search(r"(?m)^name:\s*[a-z0-9-]+\s*$", metadata)), f"Missing skill name: {skill}")
+        check(bool(re.search(r"(?m)^description:\s*\S", metadata)), f"Missing description: {skill}")
+        match = re.search(r"(?m)^name:\s*([a-z0-9-]+)\s*$", metadata)
         if match:
             check(match.group(1) == skill.parent.name, f"Skill name mismatch: {skill}")
 
