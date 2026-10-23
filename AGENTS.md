@@ -1,43 +1,50 @@
 # Agent Instructions
 
-## Zweck und Quellen
-- Dieses Repository ist die Vorlage für neue KI-unterstützte Projekte.
-- `README.md` beschreibt die Benutzung; `doc/ai/CONTEXT.md` ist der Kontext-Wegweiser.
-- Lies nur die für die Aufgabe relevanten Dokumente und Quelldateien.
-- Das Repository und die Tests sind maßgeblich; Chatverläufe sind keine verifizierte Ist-Dokumentation.
+## Zweck, Rolle und Quellen
+- Dieses Repository ist das frameworkneutrale Template für KI-unterstützte Projekte.
+- Die projektspezifische Rolle, das Ziel, Constraints und Akzeptanzkriterien stehen in `doc/ai/PROJECT.md`.
+- `doc/ai/CONTEXT.md` ist der Kontext-Wegweiser: pro Aufgabe nur relevante Dateien lesen.
+- Maßgebliche Anforderungen stehen in Normdokumenten; tatsächlichen Codezustand anhand des Repositories und der Tests prüfen.
+- Chatverläufe sind keine verifizierte Ist-Dokumentation.
 
-## Änderungen
-- Prüfe vor jeder Änderung den aktuellen Branch, HEAD-Commit und die betroffenen Dateien.
-- Formuliere bei größeren Aufgaben einen Plan; halte Änderungen klein und prüfbar.
-- Erhalte vorhandene Funktionen und Schnittstellen, sofern nichts anderes beauftragt ist.
-- Neue Abhängigkeiten, Frameworks oder MCP-Server nur mit nachvollziehbarem Bedarf.
-- Keine Secrets, persönlichen Zugangsdaten, privaten Schlüssel oder `.env`-Dateien committen.
+## Umsetzung
+- Vor Änderungen aktuellen Branch, HEAD-Commit und betroffene Dateien prüfen.
+- Bei größeren Aufgaben einen knappen Plan und messbare Akzeptanzkriterien erstellen.
+- Vorhandene Funktionen und Schnittstellen erhalten, soweit nicht anders beauftragt.
+- Neue Abhängigkeiten, Frameworks und MCP-Server nur begründet einführen.
+- Keine Secrets, vertrauliche Rohdaten, personenbezogenen Chattranskripte oder privaten Schlüssel committen.
 
-## Konventionen
-- Versionsstand in `VERSION` nach SemVer pflegen; Änderungshistorie in `CHANGELOG.md`.
-- Dokumentationsänderungen und Codeänderungen synchron halten.
-- Architekturentscheidungen unter `doc/ai/decisions/` mit Status und Begründung festhalten.
-- Deutsch für die fachliche Dokumentation; Englisch für Quellcode und technische Bezeichner.
-- Keine erfundenen Testergebnisse, Commits, Fähigkeiten oder externen Daten.
+## Regeln
+- `VERSION` nach SemVer und `CHANGELOG.md` konsistent pflegen.
+- Dokumentation, Code und relevante Tests synchron halten.
+- Normative Architekturentscheidungen unter `doc/ai/decisions/` mit Begründung und Status festhalten.
+- Deutsch für fachliche Dokumentation, Englisch für Quellcode und technische Namen.
+- Keine behaupteten Prüfungen, Commits, Fähigkeiten, Fakten oder Quellen erfinden.
 
-## Validierung und Lieferung
-- Nach Änderungen `just validate` oder `python3 scripts/validate_template.py` ausführen.
-- Für Änderungen am Repository nach Möglichkeit Branch → Commit → Pull Request verwenden.
-- Kein Merge, Release oder externes Deployment ohne ausdrückliche Freigabe.
-- Im Ergebnis Änderungen, ausgeführte Prüfungen, nicht ausgeführte Prüfungen und offene Punkte nennen.
+## Optionale Wissensbasis
+- `knowledge/` ist optional: Originalquelleninventar unter `knowledge/raw/`, abgeleitete Informationen unter `knowledge/wiki/`.
+- Bei fachlichen Fragen mit `knowledge/wiki/index.md` beginnen und gezielt relevante Seiten/Originalquellen laden.
+- Ingest: neue Fakten belegen, Quellreferenzen erhalten und Index/Log aktualisieren.
+- Lint: `just knowledge-validate` und bei Bedarf semantische Quellenprüfung.
+- Abgeleitete Wiki-Seiten sind nicht automatisch verbindliche Anforderungen oder ADRs.
+- Bei einem entfernten `knowledge/` keine Wiki-Pflichten erzwingen.
+
+## Validierung, Done und Lieferung
+- `just validate` und für relevante Änderungen `just test` / `just ci` verwenden.
+- Für jede Aufgabe prüfen, ob die in `doc/ai/PROJECT.md` definierten Done-Kriterien erfüllt sind.
+- Bei Code: passende Tests ausführen; bei Recherche: Aussagen quellenbasiert belegen.
+- Nach Möglichkeit Branch → Commit → Pull Request. Kein Merge, Release oder Deployment ohne ausdrückliche Freigabe.
+- Erledigte Änderungen, ausgeführte und nicht ausgeführte Prüfungen sowie verbleibende Risiken nennen.
 
 ## Kontext-Routing
-- Ziel und Scope: `doc/ai/PROJECT.md`
-- Kontextindex: `doc/ai/CONTEXT.md`
-- Architektur und Konventionen: `doc/ai/ARCHITECTURE.md`, `doc/ai/CONVENTIONS.md`
-- Verifizierter Arbeitsstand: `doc/ai/STATUS.md`
-- Prioritäten: `doc/ai/ROADMAP.md`
+- Ziel, Rolle, Scope, Done: `doc/ai/PROJECT.md`
+- Kontext und Quellenpriorität: `doc/ai/CONTEXT.md`
+- Architektur und Coding: `doc/ai/ARCHITECTURE.md`, `doc/ai/CONVENTIONS.md`, ADRs
+- Dokumentierter Stand und Planung: `doc/ai/STATUS.md`, `doc/ai/ROADMAP.md`
 - Tools/MCP: `doc/ai/TOOLS.md`
 - ChatGPT-Projektanweisungen: `doc/ai/CHATGPT_PROJECT.md`
+- Optionales Wiki: `knowledge/README.md`, `knowledge/SCHEMA.md`, `knowledge/wiki/index.md`
 
-## Skills
-Bedarfsweise verwenden, sofern vom Agent-Client unterstützt:
-- `implement-feature`: Feature planen, implementieren und prüfen.
-- `code-review`: Risiko- und Code-Review.
-- `release`: SemVer und Release-Vorbereitung.
-- `documentation`: Dokumentation und Kontext aktualisieren.
+## Skills (falls im Client verfügbar)
+- Entwicklung: `implement-feature`, `code-review`, `release`, `documentation`
+- Fachwissen: `knowledge-ingest`, `knowledge-query`, `knowledge-lint`

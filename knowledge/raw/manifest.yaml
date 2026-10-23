@@ -1,0 +1,3 @@
+# Source inventory. Add only real, authorized sources.
+# Supported form: sources: followed by flat "- id:" records, see ../SCHEMA.md.
+sources: []
